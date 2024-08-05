@@ -83,7 +83,7 @@ type SearchParams = {
   tlt: string;
   km: number;
   veid: number;
-  distance:number
+  distance: number;
 };
 
 function Page({ searchParams }: Props) {
@@ -130,13 +130,13 @@ function Page({ searchParams }: Props) {
     console.log(pricequota);
   }, [pricequota]);
 
-  const getVehicleDetails = (id:number) => {
+  const getVehicleDetails = (id: number) => {
     const results = roundTripData.find((obj) => obj.id == id);
     console.log(results);
     return results;
   };
 
-  const getPriceDetail = (vh:any, km:number) => {
+  const getPriceDetail = (vh: any, km: number) => {
     if (searchParams.tttyp == "rental") {
       if (km == 120) {
         return vh.rentper12;
@@ -166,7 +166,7 @@ function Page({ searchParams }: Props) {
       return bfare;
     }
   };
-  const calculatePercentage = (pricequota:string) => {
+  const calculatePercentage = (pricequota: string) => {
     console.log(pricequota);
     if (pricequota == "25") {
       const price = (25 / 100) * bookingDetails?.tripTotalFare;
@@ -193,7 +193,7 @@ function Page({ searchParams }: Props) {
     getBookingData();
     setPhone(searchParams.phn);
   }, []);
-  const calculateTotalFare = (basefare:number) => {
+  const calculateTotalFare = (basefare: number) => {
     const part = 18;
     const partialpercentage = (part / 100) * basefare;
     const total = basefare + partialpercentage;
@@ -239,7 +239,7 @@ function Page({ searchParams }: Props) {
       vehicleCapacity: vehicleDetails?.maximumCapacity || "hey",
       tripTotalFare: total,
       tripStartingDestination: searchParams.stlc,
-      tripEndingDestination: searchParams.enlc||"nun",
+      tripEndingDestination: searchParams.enlc || "nun",
       vehicleperHour: vehicleDetails?.rentPerHour || "hey",
       vehicleperKM: vehicleDetails?.rentPerKm || "hey",
       passengerName: form1.getValues("name") || "hey",
@@ -445,16 +445,18 @@ function Page({ searchParams }: Props) {
                     name="gst"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Do you have GST ?</FormLabel>
+                        <FormLabel>Do you have GST?</FormLabel>
                         <FormControl>
                           <input
                             type="checkbox"
                             className="w-full px-3 py-2 border border-gray-300 rounded"
-                            {...field}
+                            checked={field.value} // Use 'checked' for the checkbox state
                             onChange={(e) => {
-                              field.onChange(e);
-                              setShowGstFields(e.target.checked);
+                              field.onChange(e); // Update the form state
+                              setShowGstFields(e.target.checked); // Custom handler to show additional fields
                             }}
+                            onBlur={field.onBlur} // Attach the blur handler
+                            ref={field.ref} // Attach the ref
                           />
                         </FormControl>
                         <FormMessage />
@@ -555,7 +557,15 @@ function Page({ searchParams }: Props) {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl className="mt-25">
-                        <input type="checkbox" {...field} className="mr-2" />
+                        <input
+                          type="checkbox"
+                          checked={field.value} // Use 'checked' for boolean values
+                          onChange={field.onChange} // Attach the onChange handler
+                          onBlur={field.onBlur} // Attach the onBlur handle
+                          ref={field.ref} // Attach the ref
+                          className="mr-2"
+                        />
+                        F
                       </FormControl>
                       <FormLabel>
                         I agree to the
