@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import { BookingProvider } from '../../contexts/Bookingcontext'
+import { BookingProvider } from "../../contexts/Bookingcontext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmCVRh13hcyv1pA-Oq6ywSC02w6M0V4pY&libraries=places"></script>
-
+        <Script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmCVRh13hcyv1pA-Oq6ywSC02w6M0V4pY&libraries=places"
+          strategy="beforeInteractive"
+        />
       </head>
       <body className={inter.className}>
         <BookingProvider>
@@ -31,4 +34,7 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+
 
