@@ -86,7 +86,7 @@ type SearchParams = {
   distance:number
 };
 
-function page({ searchParams }: Props) {
+function Page({ searchParams }: Props) {
   const [phone, setPhone] = useState("");
 
   const form1 = useForm<z.infer<typeof formSchema1>>({
@@ -614,4 +614,4 @@ function page({ searchParams }: Props) {
   );
 }
 
-export default page;
+export default Page;
