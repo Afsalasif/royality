@@ -160,7 +160,7 @@ function RentalSearchForm() {
         <div className="grid w-full lg:max-w-sm items-center gap-1.5">
           <FormField
             control={form1.control}
-            name="phoneNumber"f
+            name="phoneNumber"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-white flex mt-2">
