@@ -83,6 +83,7 @@ type SearchParams = {
   tlt: string;
   km: number;
   veid: number;
+  distance:number
 };
 
 function page({ searchParams }: Props) {
@@ -95,7 +96,7 @@ function page({ searchParams }: Props) {
       email: "",
       mobile: phone,
       pickup: searchParams.stlc,
-      drop: searchParams.enlc || "", // Set default to empty string if not provided
+      drop: searchParams.enlc || "nan", // Set default to empty string if not provided
       terms: false,
       time: "",
       specialRequest: "",
@@ -110,12 +111,12 @@ function page({ searchParams }: Props) {
   const formData = getValues();
   const router = useRouter();
   const [showGstFields, setShowGstFields] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState({});
+  const [bookingDetails, setBookingDetails] = useState<any>({});
 
   const [price, setPrice] = useState(0);
   const [totalAmount, setTotalAmount] = useState(bookingDetails.tripTotalFare);
-  const [driverPayment, setDriverPayment] = useState();
-  const [onlinepayment, setonlinepayment] = useState();
+  const [driverPayment, setDriverPayment] = useState<number>();
+  const [onlinepayment, setonlinepayment] = useState<number>();
 
   const customFunction = () => {
     const formData = getValues();
@@ -129,13 +130,13 @@ function page({ searchParams }: Props) {
     console.log(pricequota);
   }, [pricequota]);
 
-  const getVehicleDetails = (id) => {
+  const getVehicleDetails = (id:number) => {
     const results = roundTripData.find((obj) => obj.id == id);
     console.log(results);
     return results;
   };
 
-  const getPriceDetail = (vh, km) => {
+  const getPriceDetail = (vh:any, km:number) => {
     if (searchParams.tttyp == "rental") {
       if (km == 120) {
         return vh.rentper12;
@@ -165,7 +166,7 @@ function page({ searchParams }: Props) {
       return bfare;
     }
   };
-  const calculatePercentage = (pricequota) => {
+  const calculatePercentage = (pricequota:string) => {
     console.log(pricequota);
     if (pricequota == "25") {
       const price = (25 / 100) * bookingDetails?.tripTotalFare;
@@ -192,7 +193,7 @@ function page({ searchParams }: Props) {
     getBookingData();
     setPhone(searchParams.phn);
   }, []);
-  const calculateTotalFare = (basefare) => {
+  const calculateTotalFare = (basefare:number) => {
     const part = 18;
     const partialpercentage = (part / 100) * basefare;
     const total = basefare + partialpercentage;
@@ -211,29 +212,24 @@ function page({ searchParams }: Props) {
   };
 
   const getBookingData = () => {
-    // here the boooking data is made
     let tripdistance = 0;
-    if (searchParams.tttyp == "rental") {
-      tripdistance = searchParams?.tlt * 10;
-    } else if (searchParams.tttyp == "oneWay") {
+    if (searchParams.tttyp === "rental") {
+      tripdistance = parseInt(searchParams?.tlt) * 10;
+    } else if (searchParams.tttyp === "oneWay") {
       tripdistance = searchParams.distance;
-    } else if (searchParams.tttyp == "round") {
+    } else if (searchParams.tttyp === "round") {
       tripdistance = searchParams.distance;
-      console.log(searchParams.distance);
     }
-    const vehicleDetails = getVehicleDetails(searchParams.veid);
 
+    const vehicleDetails = getVehicleDetails(searchParams.veid);
     const baseFare = getPriceDetail(vehicleDetails, tripdistance);
     const total = calculateTotalFare(baseFare);
-
     const destination = getDestination();
+
     const bookingData = {
       vehicleId: vehicleDetails?.id || "hey",
       vehicleName: vehicleDetails?.vehicleName || "hey",
       vehicleType: vehicleDetails?.vehicleType || "hey",
-      vehicleNumber: vehicleDetails?.vehicleNumber || "hey",
-      driverName: vehicleDetails?.driverName || "hey",
-      driverContact: vehicleDetails?.driverContact || "hey",
       tripRange: searchParams.tlt || "hey",
       tripDistance: tripdistance || "hey",
       tripType: searchParams.tttyp || "hey",
@@ -243,30 +239,28 @@ function page({ searchParams }: Props) {
       vehicleCapacity: vehicleDetails?.maximumCapacity || "hey",
       tripTotalFare: total,
       tripStartingDestination: searchParams.stlc,
-      tripEndingDestination: searchParams.enlc,
+      tripEndingDestination: searchParams.enlc||"nun",
       vehicleperHour: vehicleDetails?.rentPerHour || "hey",
       vehicleperKM: vehicleDetails?.rentPerKm || "hey",
       passengerName: form1.getValues("name") || "hey",
       passengerContact: form1.getValues("mobile") || "hey",
       passengerEmail: form1.getValues("email") || "hey",
-      bookingDate: new Date().toISOString() || "hey", // Current date-time
+      bookingDate: new Date().toISOString(),
       pickupDateTime: form1.getValues("time") || "hey",
-      dropoffDateTime: null, // Can be calculated based on trip details
-      paymentStatus: "Pending", // Default status
+      dropoffDateTime: null,
+      paymentStatus: "Pending",
       paymentMethod: form1.getValues("type") || "hey",
       specialInstructions: form1.getValues("specialRequest") || "hey",
       baseFare: baseFare || "hey",
-      distanceFare:
-        baseFare * (tripdistance / vehicleDetails?.rentPerKm) || "hey", // Example calculation
-      timeFare:
-        baseFare * (tripdistance / vehicleDetails?.rentPerHour) || "hey", // Example calculation
-      taxes: (18 / 100) * baseFare, // Example tax calculation
-      totalFare: total, // Final total fare including all charges
+      taxes: (18 / 100) * baseFare,
+      amount: total,
+      gstAddress: form1.getValues("gstAddress") || "hey",
+      gstNumber: form1.getValues("gstNumber") || "hey",
+      terms: form1.getValues("terms"),
+      tripDistanceUnit: "km",
+      bookingId: Math.floor(Math.random() * 1000000).toString(),
     };
-
     setBookingDetails(bookingData);
-
-    // console.log(vehicleDetails);
   };
   async function getNextSerialNumber() {
     const serialDocRef = doc(db, "meta", "serialNumber");

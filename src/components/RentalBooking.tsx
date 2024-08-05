@@ -1,6 +1,6 @@
 import React from "react";
 
-function RentalBooking(bookingDetails) {
+function RentalBooking(bookingDetails:any) {
   // console.log(bookingDetails, "here");
   return (
     <>

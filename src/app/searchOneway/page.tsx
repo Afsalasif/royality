@@ -24,7 +24,7 @@ function Page({ searchParams }: Props) {
   const [noOfDays, setNoOfDays] = useState(0);
   const [includedDistance, setIncludedDistance] = useState<number>(0);
   const router = useRouter();
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState<any>({});
 
   useEffect(() => {
     if (!searchParams.url) {
@@ -69,7 +69,7 @@ function Page({ searchParams }: Props) {
     }
   };
 
-  const handleButtonClick = (e, item) => {
+  const handleButtonClick = (e:any, item:any) => {
     const cst = "cst";
     const triptype ='oneWay'
     const url = new URL("https://www.a.com");

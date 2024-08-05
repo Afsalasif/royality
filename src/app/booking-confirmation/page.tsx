@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Invoice from "@/components/InvoicePDF";
@@ -9,13 +9,21 @@ import Invoice from "@/components/InvoicePDF";
 type Props = {
   searchParams: SearchParams;
 };
+
 type SearchParams = {
   bookingId: string;
 };
 
+type BookingData = {
+  values?: {
+    name?: string;
+  };
+  // Add other fields as necessary
+};
+
 function BookingConfirmation({ searchParams }: Props) {
   const router = useRouter();
-  const [bookingData, setBookingData] = useState({});
+  const [bookingData, setBookingData] = useState<BookingData | null>(null);
 
   useEffect(() => {
     const bookingId = searchParams.bookingId;
@@ -24,19 +32,24 @@ function BookingConfirmation({ searchParams }: Props) {
     }
 
     const fetchBookingData = async () => {
-      const docRef = doc(db, "bookings", bookingId);
-      const docSnap = await getDoc(docRef);
+      try {
+        const docRef = doc(db, "bookings", bookingId);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        setBookingData(docSnap.data());
-      } else {
-        console.log("No such document!");
+        if (docSnap.exists()) {
+          setBookingData(docSnap.data() as BookingData);
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching booking data:", error);
       }
     };
 
     fetchBookingData();
   }, [searchParams.bookingId]);
-console.log(bookingData)
+
+  console.log(bookingData);
 
   if (!bookingData) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;

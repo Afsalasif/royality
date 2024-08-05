@@ -19,7 +19,7 @@ type SearchParams = {
 };
 
 // Function to create date
-const parseDate = (dateString) => {
+const parseDate = (dateString:string) => {
   const [day, month, year] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day); // JavaScript months are 0-based
 };
@@ -48,12 +48,12 @@ function Page({ searchParams }: Props) {
 
   if (!searchParams.url) return notFound();
 
-  const calculateRate = (rent) => {
+  const calculateRate = (rent:number) => {
     const rate = noOfDays * rent;
     return rate;
   };
 
-  const handleButtonClick = (e, item) => {
+  const handleButtonClick = (e:any, item:any) => {
     const cst = "cst";
     const triptype = 'round';
     const url = new URL("https://www.a.com");

@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Invoice = ({ bookingData, bookingId }) => {
+const Invoice = ({ bookingData, bookingId }:any) => {
 
   return (
     <Document>
@@ -91,11 +91,7 @@ const Invoice = ({ bookingData, bookingId }) => {
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Image
-              style={styles.logo}
-              src="https://www.keralatourism.org/images/destination/mobile/chengannur_mahadeva_temple20131127121320_455_1.jpg" // Replace with the actual logo URL
-              alt="Savaari Logo"
-            />
+          
           </View>
           <View style={styles.companyDetailsContainer}>
             <Text style={styles.companyDetails}>

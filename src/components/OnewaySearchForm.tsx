@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +7,14 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "./ui/calendar";
 import { addDoc, collection } from "firebase/firestore";
@@ -16,17 +23,19 @@ import { format } from "date-fns";
 
 export const formSchema1 = z.object({
   startLocation: z.string().min(1, { message: "Enter an address" }),
-  endingLocation: z.string().min(1),
+  endingLocation: z.string().min(1, { message: "Enter an address" }),
   phoneNumber: z
-      .string()
-      .regex(/^\d+$/, "Mobile number must contain only numbers")
-      .min(10, "Mobile number must be at least 10 digits"),
-  dates: z.date(),
+    .string()
+    .regex(/^\d+$/, "Mobile number must contain only numbers")
+    .min(10, "Mobile number must be at least 10 digits"),
+  dates: z.date().optional(),
 });
+
+type FormSchema = z.infer<typeof formSchema1>;
 
 function OnewaySearchForm() {
   const router = useRouter();
-  const form1 = useForm<z.infer<typeof formSchema1>>({
+  const form1 = useForm<FormSchema>({
     resolver: zodResolver(formSchema1),
     defaultValues: {
       startLocation: "",
@@ -36,38 +45,44 @@ function OnewaySearchForm() {
     },
   });
 
-  const startLocationRef = useRef(null);
-  const endingLocationRef = useRef(null);
+  const startLocationRef = useRef<HTMLInputElement>(null);
+  const endingLocationRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const startAutocomplete = new google.maps.places.Autocomplete(startLocationRef.current);
-    const endAutocomplete = new google.maps.places.Autocomplete(endingLocationRef.current);
+    if (window.google) {
+      const startAutocomplete = new google.maps.places.Autocomplete(
+        startLocationRef.current!
+      );
+      const endAutocomplete = new google.maps.places.Autocomplete(
+        endingLocationRef.current!
+      );
 
-    startAutocomplete.addListener("place_changed", () => {
-      const place = startAutocomplete.getPlace();
-      form1.setValue("startLocation", place.formatted_address);
-    });
+      startAutocomplete.addListener("place_changed", () => {
+        const place = startAutocomplete.getPlace();
+        form1.setValue("startLocation", place.formatted_address || "");
+      });
 
-    endAutocomplete.addListener("place_changed", () => {
-      const place = endAutocomplete.getPlace();
-      form1.setValue("endingLocation", place.formatted_address);
-    });
-  }, []);
+      endAutocomplete.addListener("place_changed", () => {
+        const place = endAutocomplete.getPlace();
+        form1.setValue("endingLocation", place.formatted_address || "");
+      });
+    }
+  }, [form1]);
 
   const calculateDistance = (startLocation: string, endingLocation: string) => {
     const service = new google.maps.DistanceMatrixService();
-    return new Promise((resolve, reject) => {
+    return new Promise<{ distance: string; duration: string }>((resolve, reject) => {
       service.getDistanceMatrix(
         {
           origins: [startLocation],
           destinations: [endingLocation],
           travelMode: google.maps.TravelMode.DRIVING,
         },
-        (response, status) => {
+        (response:any, status:any) => {
           if (status === google.maps.DistanceMatrixStatus.OK) {
             const result = response.rows[0].elements[0];
-            const distance = result.distance.text;
-            const duration = result.duration.text;
+            const distance = result.distance?.text || "";
+            const duration = result.duration?.text || "";
             resolve({ distance, duration });
           } else {
             reject(new Error("Error fetching distance"));
@@ -77,24 +92,24 @@ function OnewaySearchForm() {
     });
   };
 
-  const onSubmit = async (values: z.infer<typeof formSchema1>) => {
+  const onSubmit: SubmitHandler<FormSchema> = async (values) => {
     console.log(values);
-  
+
     try {
-      // Calculate distance and duration
-      const { distance, duration } = await calculateDistance(values.startLocation, values.endingLocation);
-  
-      console.log('Distance:', distance);
-      console.log('Duration:', duration);
-  
-      // Extract date components
-      const starting_day = values.dates.getDate().toString();
-      const starting_month = values.dates.getMonth().toString();
-      const starting_year = values.dates.getFullYear().toString();
+      const { distance, duration } = await calculateDistance(
+        values.startLocation,
+        values.endingLocation
+      );
+
+      console.log("Distance:", distance);
+      console.log("Duration:", duration);
+
+      const starting_day = values.dates?.getDate().toString() || "";
+      const starting_month = (values.dates?.getMonth() || 0 + 1).toString();
+      const starting_year = values.dates?.getFullYear().toString() || "";
       const cst = "cst";
       const end = `${starting_day}-${starting_month}-${starting_year}`;
-  
-      // Create URL with parameters
+
       const url = new URL("https://www.a.com");
       url.searchParams.set("cst", cst);
       url.searchParams.set("end", end);
@@ -103,21 +118,18 @@ function OnewaySearchForm() {
       url.searchParams.set("enlc", values.endingLocation);
       url.searchParams.set("distance", distance);
       url.searchParams.set("duration", duration);
-  
-      // Add the document to Firestore
+
       await addDoc(collection(db, "Searchedonewaynumbers"), {
         ...values,
         distance,
-        duration
+        duration,
       });
-  
-      // Navigate to the search results page
+
       router.push(`/searchOneway?url=${encodeURIComponent(url.href)}`);
     } catch (e) {
       console.error("Error:", e);
     }
   };
-  
 
   return (
     <Form {...form1}>
@@ -131,7 +143,9 @@ function OnewaySearchForm() {
             name="startLocation"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white flex mt-2">Starting Location</FormLabel>
+                <FormLabel className="text-white flex mt-2">
+                  Starting Location
+                </FormLabel>
                 <FormMessage />
                 <FormControl>
                   <Input {...field} ref={startLocationRef} placeholder="Starting Location" />
@@ -146,7 +160,9 @@ function OnewaySearchForm() {
             name="endingLocation"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white flex mt-2">Drop Location</FormLabel>
+                <FormLabel className="text-white flex mt-2">
+                  Drop Location
+                </FormLabel>
                 <FormMessage />
                 <FormControl>
                   <Input {...field} ref={endingLocationRef} placeholder="Drop location" />
@@ -174,11 +190,7 @@ function OnewaySearchForm() {
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
+                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
@@ -204,7 +216,9 @@ function OnewaySearchForm() {
             name="phoneNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white flex mt-2">Phone number</FormLabel>
+                <FormLabel className="text-white flex mt-2">
+                  Phone number
+                </FormLabel>
                 <FormMessage />
                 <FormControl>
                   <Input {...field} placeholder="Phone number" />
@@ -216,7 +230,9 @@ function OnewaySearchForm() {
 
         <div className="flex w-full items-center space-x-2">
           <div className="grid items-center flex-1">
-            <Button type="submit" className="bg-blue-500 text-base mt-7">Search</Button>
+            <Button type="submit" className="bg-blue-500 text-base mt-7">
+              Search
+            </Button>
           </div>
         </div>
       </form>

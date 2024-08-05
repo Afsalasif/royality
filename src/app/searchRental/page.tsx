@@ -9,16 +9,27 @@ type Props = {
 };
 
 type SearchParams = {
-  url: URL;
+  url: string;
   end: string;
   stlc: string;
   phn: string;
   tlt: string;
 };
 
+type VehicleData = {
+  id: number;
+  url: string;
+  vehicleName: string;
+  vehicleType: string;
+  maximumCapacity: number;
+  rentPerKm: number;
+  rentPerHour: number;
+  rentPerDay: number;
+};
+
 function Page({ searchParams }: Props) {
-  const [kilometerData, setKilometerData] = useState(0);
-  const [vehicle1, setVehicle1] = useState([]);
+  const [kilometerData, setKilometerData] = useState<number>(0);
+  const [vehicle1, setVehicle1] = useState<VehicleData[]>([]);
   const { setBooking } = useBooking();
   const router = useRouter();
 
@@ -32,9 +43,9 @@ function Page({ searchParams }: Props) {
     const [day, month, year] = date.split("-").map(Number);
     const fmonth = month + 1;
     if (fmonth > 2 && fmonth < 6) {
-      setVehicle1(roundTripData);
+      setVehicle1(roundTripData as VehicleData[]);
     } else {
-      setVehicle1(roundTripData2);
+      setVehicle1(roundTripData2 as VehicleData[]);
     }
   };
 
@@ -46,9 +57,10 @@ function Page({ searchParams }: Props) {
     }
   };
 
-  const handleButtonClick = (e, item) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>, item: VehicleData) => {
     setBooking({ searchParams, item, kilometerData });
-
+    let a = item.id;
+    let str = a.toString()
     const cst = "cst";
     const triptype = 'rental';
     const url = new URL("https://www.a.com");
@@ -58,8 +70,8 @@ function Page({ searchParams }: Props) {
     url.searchParams.set("stlc", searchParams.stlc);
     url.searchParams.set("phn", searchParams.phn);
     url.searchParams.set("tlt", searchParams.tlt);
-    url.searchParams.set("km", kilometerData);
-    url.searchParams.set("veid", item.id);
+    url.searchParams.set("km", kilometerData.toString());
+    url.searchParams.set("veid", str);
 
     router.push(`/booking?url=${url.href}`);
   };
@@ -127,7 +139,7 @@ function Page({ searchParams }: Props) {
                         <p className="text-xs">+18% tax</p>
                       </div>
                     </div>
-                    <button className="bg-blue-500 text-white rounded mt-2 py-1 px-4" onClick={(e) => { handleButtonClick(e, item); }}>
+                    <button className="bg-blue-500 text-white rounded mt-2 py-1 px-4" onClick={(e) => handleButtonClick(e, item)}>
                       BOOK NOW
                     </button>
                   </div>
