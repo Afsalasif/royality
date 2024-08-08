@@ -565,7 +565,6 @@ function Page({ searchParams }: Props) {
                           ref={field.ref} // Attach the ref
                           className="mr-2"
                         />
-                        F
                       </FormControl>
                       <FormLabel>
                         I agree to the
