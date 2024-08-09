@@ -27,16 +27,17 @@ function BookingConfirmation({ searchParams }: Props) {
   console.log("object")
 
   useEffect(() => {
-    console.log("object")
+    console.log("object here")
     const bookingId = searchParams.bookingId;
+    console.log(bookingId,"here im booking")
     if (!bookingId) {
       return;
     }
-    const bookingid = 'RP00022'
+
 
     const fetchBookingData = async () => {
       try {
-        const docRef = doc(db, "bookings", bookingid);
+        const docRef = doc(db, "bookings", bookingId);
         const docSnap = await getDoc(docRef);
         console.log("here im reached")
 
@@ -51,7 +52,7 @@ function BookingConfirmation({ searchParams }: Props) {
     };
 
     fetchBookingData();
-  }, []);
+  }, [searchParams.bookingId]);
 
   console.log(bookingData);
 
