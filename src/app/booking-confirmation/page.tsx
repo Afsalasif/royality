@@ -14,22 +14,17 @@ type SearchParams = {
   bookingId: string;
 };
 
-type BookingData = {
-  values?: {
-    name?: string;
-  };
-  // Add other fields as necessary
-};
+
 
 function BookingConfirmation({ searchParams }: Props) {
   const router = useRouter();
-  const [bookingData, setBookingData] = useState<BookingData | null>(null);
+  const [bookingData, setBookingData] = useState<any>(null);
   console.log("object")
 
   useEffect(() => {
     console.log("object here")
     console.log(searchParams)
-    const bookingId = searchParams.bookingId;
+    const bookingId = 'RP00023';
     console.log(bookingId,"here im booking")
     if (!bookingId) {
       return;
@@ -43,7 +38,7 @@ function BookingConfirmation({ searchParams }: Props) {
         console.log("here im reached")
 
         if (docSnap.exists()) {
-          setBookingData(docSnap.data() as BookingData);
+          setBookingData(docSnap.data());
         } else {
           console.log("No such document!");
         }
@@ -57,9 +52,9 @@ function BookingConfirmation({ searchParams }: Props) {
 
   console.log(bookingData);
 
-  if (!bookingData) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
-  }
+  // if (!bookingData) {
+  //   return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  // }
 
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
