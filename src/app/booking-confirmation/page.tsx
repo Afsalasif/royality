@@ -24,6 +24,7 @@ type BookingData = {
 function BookingConfirmation({ searchParams }: Props) {
   const router = useRouter();
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
+  console.log("object")
 
   useEffect(() => {
     const bookingId = searchParams.bookingId;
@@ -36,6 +37,7 @@ function BookingConfirmation({ searchParams }: Props) {
       try {
         const docRef = doc(db, "bookings", bookingid);
         const docSnap = await getDoc(docRef);
+        console.log("here im reached")
 
         if (docSnap.exists()) {
           setBookingData(docSnap.data() as BookingData);
