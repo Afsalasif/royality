@@ -30,10 +30,11 @@ function BookingConfirmation({ searchParams }: Props) {
     if (!bookingId) {
       return;
     }
+    const bookingid = 'RP00022'
 
     const fetchBookingData = async () => {
       try {
-        const docRef = doc(db, "bookings", bookingId);
+        const docRef = doc(db, "bookings", bookingid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
