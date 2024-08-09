@@ -28,6 +28,7 @@ function BookingConfirmation({ searchParams }: Props) {
 
   useEffect(() => {
     console.log("object here")
+    console.log(searchParams)
     const bookingId = searchParams.bookingId;
     console.log(bookingId,"here im booking")
     if (!bookingId) {
