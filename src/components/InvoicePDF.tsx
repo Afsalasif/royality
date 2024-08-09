@@ -231,15 +231,15 @@ const Invoice = ({ bookingData, bookingId }:any) => {
             • Any discrepancies regarding bill amount will be considered within
             24 hrs of Invoice.
           </Text>
-          <Text style={styles.text}>
-            Details T&C: <Link src="http://savaari.com/terms">click here</Link>
-          </Text>
+          {/* <Text style={styles.text}>
+            Details T&C: <Link src="">click here</Link>
+          </Text> */}
         </View>
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text>In case of any queries reach out to us at:</Text>
-          <Text>orders@savaari.com | 9045450000</Text>
+          <Text>In case of any queries reach out to us :</Text>
+          <Text>rproyality632@gmail.com | 8078783984 </Text>
         </View>
       </Page>
     </Document>
