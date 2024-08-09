@@ -20,20 +20,21 @@ function BookingConfirmation({ searchParams }: Props) {
   const router = useRouter();
   const [bookingData, setBookingData] = useState<any>(null);
   console.log("object")
+  const bid=searchParams.bookingId
 
   useEffect(() => {
     console.log("object here")
     console.log(searchParams)
     const bookingId = 'RP00023';
-    console.log(bookingId,"here im booking")
-    if (!bookingId) {
+    console.log(bid,"here im booking")
+    if (!bid) {
       return;
     }
 
 
     const fetchBookingData = async () => {
       try {
-        const docRef = doc(db, "bookings", bookingId);
+        const docRef = doc(db, "bookings", bid);
         const docSnap = await getDoc(docRef);
         console.log("here im reached")
 
