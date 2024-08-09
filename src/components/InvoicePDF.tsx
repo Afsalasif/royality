@@ -231,9 +231,9 @@ const Invoice = ({ bookingData, bookingId }:any) => {
             • Any discrepancies regarding bill amount will be considered within
             24 hrs of Invoice.
           </Text>
-          {/* <Text style={styles.text}>
-            Details T&C: <Link src="">click here</Link>
-          </Text> */}
+          <Text style={styles.text}>
+            Details T&C: <Link src="https://www.keralatourroyality.com/termsandconditions">click here</Link>
+          </Text>
         </View>
 
         {/* Footer */}
