@@ -27,6 +27,7 @@ function BookingConfirmation({ searchParams }: Props) {
   console.log("object")
 
   useEffect(() => {
+    console.log("object")
     const bookingId = searchParams.bookingId;
     if (!bookingId) {
       return;
@@ -50,7 +51,7 @@ function BookingConfirmation({ searchParams }: Props) {
     };
 
     fetchBookingData();
-  }, [searchParams.bookingId]);
+  }, []);
 
   console.log(bookingData);
 
