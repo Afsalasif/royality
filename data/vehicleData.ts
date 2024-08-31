@@ -6,24 +6,24 @@ export const roundTripData = [
         vehicleName:'Etios,Dzire',
         url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN4GyNpVI_6k7AJWfdUtTKMc-q3dYvu3DoezbAHZKkDgu89grVEV1JZDqgA&s',
         vehicleType:"sedan",
-        rentPerDay:2000,
-        rentper12:2500,
-        rentPerKm:20,
+        rentPerDay:20,
+        rentper12:25,
+        rentPerKm:1,
         rentPerHour:200,
         maximumCapacity:4,
-        minumumOneway:1200
+        minumumOneway:12
     },
     {
         id:2,
         vehicleName:'Xylo,Ertiga',
         url:"https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Hyundai-Alcazar-130720212215.jpg",
         vehicleType:"suv",
-        rentPerDay:3000,
-        rentper12:4500,
-        rentPerKm:25,
-        rentPerHour:250,
+        rentPerDay:20,
+        rentper12:25,
+        rentPerKm:1,
+        rentPerHour:200,
         maximumCapacity:6,
-        minumumOneway:1500
+        minumumOneway:12
     },
     {
         id:3,
@@ -56,22 +56,24 @@ export const roundTripData2 = [
         vehicleName:'Etios,Dzire',
         url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN4GyNpVI_6k7AJWfdUtTKMc-q3dYvu3DoezbAHZKkDgu89grVEV1JZDqgA&s',
         vehicleType:"sedan",
-        rentPerDay:2500,
-        rentper12:3500,
-        rentPerKm:10,
+        rentPerDay:20,
+        rentper12:25,
+        rentPerKm:1,
         rentPerHour:200,
-        maximumCapacity:4
+        maximumCapacity:4,
+        minumumOneway:12
     },
     {
         id:2,
         vehicleName:'Xylo,Ertiga',
         url:"https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Hyundai-Alcazar-130720212215.jpg",
         vehicleType:"suv",
-        rentPerDay:3000,
-        rentper12:4500,
-        rentPerKm:20,
-        rentPerHour:250,
-        maximumCapacity:6
+        rentPerDay:20,
+        rentper12:25,
+        rentPerKm:1,
+        rentPerHour:200,
+        maximumCapacity:6,
+        minumumOneway:12
     },
     {
         id:3,
