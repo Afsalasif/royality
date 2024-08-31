@@ -25,6 +25,7 @@ type VehicleData = {
   rentPerKm: number;
   rentPerHour: number;
   rentPerDay: number;
+  rentper12:number
 };
 
 function Page({ searchParams }: Props) {
@@ -134,10 +135,20 @@ function Page({ searchParams }: Props) {
                   </div>
                   <div className="flex flex-col justify-between">
                     <div className="flex items-start justify-end space-x-2 text-right">
+                    {searchParams.tlt == '8' && (
                       <div className="text-right">
-                        <p className="text-2xl font-bold">₹ {item.rentPerDay} / {searchParams.tlt} hr</p>
-                        <p className="text-xs">+18% tax</p>
-                      </div>
+                      <p className="text-2xl font-bold">₹ {item.rentPerDay} / {searchParams.tlt} hr</p>
+                      <p className="text-xs">+18% tax</p>
+                    </div>
+                    )}
+                      {searchParams.tlt == '12' && (
+                      <div className="text-right">
+                      <p className="text-2xl font-bold">₹ {item.rentper12} / {searchParams.tlt} hr</p>
+                      <p className="text-xs">+18% tax</p>
+                    </div>
+                    )}
+
+                      
                     </div>
                     <button className="bg-blue-500 text-white rounded mt-2 py-1 px-4" onClick={(e) => handleButtonClick(e, item)}>
                       BOOK NOW

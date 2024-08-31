@@ -178,7 +178,11 @@ const Invoice = ({ bookingData, bookingId }:any) => {
             b) GST: {bookingData?.bookingDetails?.taxes }
           </Text>
           <Text style={styles.text}>
-            Payment Method: {bookingData?.bookingDetails?.tripTotalFare} (to be
+            Online Payment: {bookingData?.bookingDetails?.advance} 
+            
+          </Text>
+          <Text style={styles.text}>
+            Pay to Driver: {bookingData?.bookingDetails?.dp} (to be
             paid to the driver)
           </Text>
         </View>
@@ -238,6 +242,8 @@ const Invoice = ({ bookingData, bookingId }:any) => {
 
         {/* Footer */}
         <View style={styles.footer}>
+          <Text>to cancel <Link src={`http://localhost:3000/cancel-booking?bookingId=${bookingId}`}> click here</Link> </Text>
+
           <Text>In case of any queries reach out to us :</Text>
           <Text>rproyality632@gmail.com | 8078783984 </Text>
         </View>

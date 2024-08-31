@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Razorpay from "razorpay";
 import jwt from "jsonwebtoken";
 import {
   Form,
@@ -34,6 +35,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { db } from "../../../firebase";
 import InvoicePDF from "@/components/InvoicePDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { truncate } from "fs";
 
 const formSchema1 = z
   .object({
@@ -166,6 +168,43 @@ function Page({ searchParams }: Props) {
       return bfare;
     }
   };
+  interface OrderData {
+    id: string;
+    amount: number;
+    currency: string;
+    receipt: string;
+  }
+  
+  const createOrder = async (amount: number): Promise<OrderData> => {
+    const response = await fetch("/api/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount, currency: "INR" }),
+    });
+  
+    const orderData: OrderData = await response.json();
+    return orderData;
+  };
+  interface PaymentDetails {
+    razorpay_order_id: string;
+    razorpay_payment_id: string;
+    razorpay_signature: string;
+  }
+  
+  const verifyPayment = async (paymentDetails: PaymentDetails): Promise<{ success: boolean }> => {
+    const response = await fetch("/api/verify-payment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(paymentDetails),
+    });
+  
+    const verificationResult = await response.json();
+    return verificationResult;
+  };
   const calculatePercentage = (pricequota: string) => {
     console.log(pricequota);
     if (pricequota == "25") {
@@ -175,6 +214,13 @@ function Page({ searchParams }: Props) {
       setonlinepayment(price);
       setTotalAmount(price);
       setDriverPayment(dp);
+      const updatedB ={
+        ...bookingDetails,
+        advance:price|0,
+        dp:dp
+
+      }
+      setBookingDetails(updatedB)
     } else if (pricequota == "100") {
       const price = (2 / 100) * bookingDetails?.tripTotalFare;
       const finalprice = bookingDetails?.tripTotalFare - price;
@@ -182,6 +228,13 @@ function Page({ searchParams }: Props) {
       setTotalAmount(finalprice);
       setDriverPayment(0);
       setonlinepayment(finalprice);
+      const updatedB ={
+        ...bookingDetails,
+        advance:finalprice|0,
+        dp:0
+
+      }
+      setBookingDetails(updatedB)
     } else if (pricequota == "none") {
       setonlinepayment(0);
       setDriverPayment(bookingDetails?.tripTotalFare);
@@ -278,27 +331,102 @@ function Page({ searchParams }: Props) {
     });
   }
 
-  // const { handleSubmit, formState: { errors } } = form1;
-  const onSubmit = async (values: z.infer<typeof formSchema1>) => {
-    console.log("here clicked");
-    const vehicleDetailss = {
-      bookingDetails,
-      values,
-    };
-
+  const handleRazorpayPayment = async (amount:any,val:any) => {
     try {
-      const nextSerialNumber = await getNextSerialNumber();
-      const customDocId = `RP${String(nextSerialNumber).padStart(5, "0")}`;
-      await setDoc(
-        doc(collection(db, "bookings"), customDocId),
-        vehicleDetailss
-      );
-      console.log("Document written with ID: ", customDocId);
-      router.push(`/booking-confirmation?bookingId=${customDocId}`);
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      const order = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: amount }),
+      }).then((res) => res.json());
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
+        amount: order.amount,
+        currency: 'INR',
+        name: 'RP ROYALITY',
+        description: 'Booking Payment',
+        order_id: order.id,
+        handler: async (response: PaymentDetails) => {
+          const verificationResult = await verifyPayment(response);  // Verify payment
+          
+          if (verificationResult.success) {
+            console.log("Payment verified successfully!");
+            await saveBookingToFirebase(val);
+
+          } else {
+            console.error("Payment verification failed.");
+          
+          }
+        },
+        prefill: {
+          name: form1.getValues('name'),
+          email: form1.getValues('email'),
+          contact: form1.getValues('mobile'),
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error('Error during Razorpay payment:', error);
     }
   };
+
+  const onSubmit = async (values: z.infer<typeof formSchema1>) => {
+    if (values.type === '25' || values.type === '100') {
+      // Trigger Razorpay payment for 25% or 100% payment
+       await handleRazorpayPayment(totalAmount,values);
+      
+
+    } else {
+      // Handle pay to driver case directly
+      await saveBookingToFirebase(values);
+      // router.push(`/booking-confirmation?bookingId=${customDocId}`);
+    }
+  };
+
+  const saveBookingToFirebase = async (values:any) => {
+    try {
+      const nextSerialNumber = await getNextSerialNumber();
+      const customDocId = `RP${String(nextSerialNumber).padStart(5, '0')}`;
+      const vehicleDetailss = {
+        bookingDetails,
+        values,
+      };
+      await setDoc(doc(collection(db, 'bookings'), customDocId), vehicleDetailss);
+      console.log('Document written with ID: ', customDocId);
+      router.push(`/booking-confirmation?bookingId=${customDocId}`);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  };
+
+  // const { handleSubmit, formState: { errors } } = form1;
+  // const onSubmit = async (values: z.infer<typeof formSchema1>) => {
+  //   console.log("here clicked");
+  //   const vehicleDetailss = {
+  //     bookingDetails,
+  //     values,
+  //   };
+
+  //   try {
+  //     const nextSerialNumber = await getNextSerialNumber();
+  //     const customDocId = `RP${String(nextSerialNumber).padStart(5, "0")}`;
+  //     await setDoc(
+  //       doc(collection(db, "bookings"), customDocId),
+  //       vehicleDetailss
+  //     );
+  //     console.log("Document written with ID: ", customDocId);
+  //     router.push(`/booking-confirmation?bookingId=${customDocId}`);
+  //   } catch (e) {
+  //     console.error("Error adding document: ", e);
+  //   }
+  // };
 
   return (
     <>
@@ -536,14 +664,14 @@ function Page({ searchParams }: Props) {
                             </span>
                           </FormLabel>
                         </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
+                        {/* <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="none" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             Pay to driver
                           </FormLabel>
-                        </FormItem>
+                        </FormItem> */}
                       </RadioGroup>
                     </FormControl>
                     <FormMessage />
