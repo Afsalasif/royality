@@ -56,7 +56,7 @@ export const roundTripData2 = [
         vehicleName:'Etios,Dzire',
         url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN4GyNpVI_6k7AJWfdUtTKMc-q3dYvu3DoezbAHZKkDgu89grVEV1JZDqgA&s',
         vehicleType:"sedan",
-        rentPerDay:20,
+        rentPerDay:21,
         rentper12:25,
         rentPerKm:1,
         rentPerHour:200,
