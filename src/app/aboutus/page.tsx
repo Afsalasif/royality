@@ -23,22 +23,22 @@ function Page() {
           <p className="max-w-3xl mx-auto  text-justify text-gray-700 mb-12">
             R P Royality Tours And Travel Solutions Private Limited (RPRTATSPL)
             is a Private Limited Indian Non-Government Company incorporated in
-            India on 21 December 2022 . Its registered office is in Ernakulam,
+            India on 21 December 2022. Its registered office is in Ernakulam,
             Kerala, India. The Company is engaged in the Transportation And
-            Logistics Industry. The Company's status is Active It's a company
-            limited by shares with an authorized capital of Rs 10.00 Lakh and a
-            paid-up capital of Rs 0.10 Lakh, as per the Ministry of Corporate
-            Affairs (MCA) records. Anjana Sabu and Parakkat Sabu serve as
-            directors at the Company. We start this movement in kerala near
-            Kochi airport about 16 years ago.. Company registered as private
-            limited in 2022.. Presently in company.. 25 staff working in
-            company.. We have service in all places in Kerala.. And suitable
-            most cost effective tour. We do package, hotel booking, house boat
-            booking.. Cab service.. We provide tour services and cab services
-            outside Kerala, Coimbatore, Madurai, Rameswaram, Chennai, Bangalore,
-            Kanyakumari and other parts.. Our organization with own vehicles,
-            staff and highly educated drivers ensures 100% honest and
-            sincereservice.
+            Logistics Industry. The Company&apos;s status is Active. It&apos;s a
+            company limited by shares with an authorized capital of Rs 10.00
+            Lakh and a paid-up capital of Rs 0.10 Lakh, as per the Ministry of
+            Corporate Affairs (MCA) records. Anjana Sabu and Parakkat Sabu serve
+            as directors at the Company. We start this movement in Kerala near
+            Kochi airport about 16 years ago. The company was registered as a
+            private limited in 2022. Presently, there are 25 staff working in
+            the company. We have service in all places in Kerala and offer the
+            most cost-effective tours. We do package tours, hotel bookings,
+            houseboat bookings, and cab services. We provide tour and cab
+            services outside Kerala, including Coimbatore, Madurai, Rameswaram,
+            Chennai, Bangalore, Kanyakumari, and other parts. Our organization,
+            with its own vehicles, staff, and highly educated drivers, ensures
+            100% honest and sincere service.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
@@ -58,7 +58,7 @@ function Page() {
               </h3>
               <p className="text-gray-700">
                 To deliver superior products and services that exceed our
-                customers' expectations. We aim to continuously innovate and
+                customers&apos;s expectations. We aim to continuously innovate and
                 improve, while fostering a culture of excellence and
                 collaboration.
               </p>
