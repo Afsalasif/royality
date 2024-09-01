@@ -11,9 +11,9 @@ function Page() {
             Welcome to our website. If you continue to browse and use this
             website, you are agreeing to comply with and be bound by the
             following terms and conditions of use, which together with our
-            privacy policy govern Rp royality relationship with you in relation
-            to this website. If you disagree with any part of these terms and
-            conditions, please do not use our website.
+            privacy policy govern Rp Royality&apos;s relationship with you in
+            relation to this website. If you disagree with any part of these
+            terms and conditions, please do not use our website.
           </p>
         </div>
       </section>
@@ -27,12 +27,13 @@ function Page() {
               1. Ownership
             </h2>
             <p className="text-gray-700 mb-8 text-justify">
-              The term 'Rp royality" or 'us' or 'we' refers to the RP ROYALITY
-              TOURS AND TRAVEL SOLOTUIONS PRIVATE LIMITED whose registered
-              office is 'Rp Royality Tours And Travel Solutions Private Limited,
-              Painadath Buildings, 2/180 A, Near Kurumbakaav Temple, Chengamanad
-              Post, Ernakulam Dist. Pin 693578. Kerala, India. The term 'you'
-              refers to the user or viewer of our website.
+              The term &apos;Rp royality&apos; or &apos;us&apos; or
+              &apos;we&apos; refers to the RP ROYALITY TOURS AND TRAVEL
+              SOLOTUIONS PRIVATE LIMITED whose registered office is Rp Royality
+              Tours And Travel Solutions Private Limited, Painadath Buildings,
+              2/180 A, Near Kurumbakaav Temple, Chengamanad Post, Ernakulam
+              Dist. Pin 693578. Kerala, India. The term &apos;you&apos; refers
+              to the user or viewer of our website.
             </p>
             {/* Intellectual Property Rights */}
             <h2 className="text-2xl font-bold capitalize text-[#013b94] mb-4">
@@ -75,27 +76,28 @@ function Page() {
               comply with in case he chooses to avail that offer.
             </p>
             <p className="text-gray-700 mb-8 text-justify">
-              2.You shall be responsible for the cost of repair for damage to,
-              or necessary cleaning of, Third Party Provider vehicles and
-              property resulting from use of the Services under your Account in
-              excess of normal “wear and tear” damages and necessary cleaning
-              (“Repair or Cleaning”). In the event that a Third Party Provider
-              reports the need for Repair or Cleaning, and such Repair or
-              Cleaning request is verified by Rp Royality in Rp Royality's
-              reasonable discretion, Rp Royality reserves the right to
-              facilitate payment for the reasonable cost of such Repair or
-              Cleaning on behalf of the Third Party Provider. Such amounts will
-              be transferred by Rp Royality to the applicable Third Party
+              You shall be responsible for the cost of repair for damage to, or
+              necessary cleaning of, Third Party Provider vehicles and property
+              resulting from use of the Services under your Account in excess of
+              normal &quot;wear and tear&quot; damages and necessary cleaning
+              (&quot;Repair or Cleaning&quot;). In the event that a Third Party
+              Provider reports the need for Repair or Cleaning, and such Repair
+              or Cleaning request is verified by Rp Royality in Rp
+              Royality&apos;s reasonable discretion, Rp Royality reserves the
+              right to facilitate payment for the reasonable cost of such Repair
+              or Cleaning on behalf of the Third Party Provider. Such amounts
+              will be transferred by Rp Royality to the applicable Third Party
               Provider and are non-refundable.
             </p>
             <p className="text-gray-700 mb-8 text-justify">
-              3.Rp Royality shall not be liable for you missing
+              Rp Royality shall not be liable for you missing
               trains/flights/events or delays etc. as the Service is dependent
-              on many factors not in Rp Royaliy control. Rp Royality shall not
-              be liable for any delays, cancellations because of any natural
-              calamity or any external factors out of Rp Royality control. Rp
-              Royality"s "Cancellation and Refund policy" as provided will still
-              hold valid in such circumstances.
+              on many factors not in Rp Royality&apos;s control. Rp Royality
+              shall not be liable for any delays, cancellations because of any
+              natural calamity or any external factors out of Rp Royality&apos;s
+              control. Rp Royality&apos;s &quot;Cancellation and Refund
+              policy&quot; as provided will still hold valid in such
+              circumstances.
             </p>
             <p className="text-gray-700 mb-8 text-justify">
               4.Third Party Service Provider and Driver may be assigned for your
@@ -127,7 +129,7 @@ function Page() {
             <p className="text-gray-700 mb-8 text-justify">
               9.You shall take full responsibility of Your items and luggage. In
               case of lost items inside the Vehicle during the journey, Rp
-              Royality will try to locate the items on a “best-effort” basis but
+              Royality will try to locate the items on a best-effort basis but
               is not responsible for the same in any manner in case of loss or
               damage to the same. If you leave any goods in the Vehicle or have
               any complaint in respect of the Services or the use of the
@@ -229,10 +231,10 @@ function Page() {
             <p className="text-gray-700 mb-8 text-justify">
               1.You understand that use of the Services may result in charges to
               you for the services or goods you receive from a Third Party
-              Provider (“Charges”). After you have received services or goods
+              Provider (Charges). After you have received services or goods
               obtained through your use of the Service, Rp Royality will
               facilitate your payment of the applicable Charges on behalf of the
-              Third Party Provider as such Third Party Provider's limited
+              Third Party Provider as such Third Party Provider&apos;s limited
               payment collection agent. Payment of the Charges in such manner
               shall be considered the same as payment made directly by you to
               the Third Party Provider. Charges will be inclusive of applicable
@@ -248,7 +250,7 @@ function Page() {
             </p>
             <p className="text-gray-700 mb-8 text-justify">
               2.All Charges are due immediately and payment will be facilitated
-              by Rp Royality , as the Third Party Provider's limited payment
+              by Rp Royality , as the Third Party Provider&apos;s limited payment
               collection agent, after which Rp Royality will send you a receipt
               by email.
             </p>
@@ -286,7 +288,7 @@ function Page() {
               Application, Rp Royality does not designate any portion of your
               payment as a tip or gratuity to the Third Party Provider. Any
               representation by Rp Royality to the effect that tipping is
-              “voluntary,” “not required,” and/or “included” in the payments you
+              &apos;voluntary,&apos; &apos;not required,&apos; and/or &apos;included&apos; in the payments you
               make for services or goods provided is not intended to suggest
               that Rp Royality provides any additional amounts, beyond those
               described above, to the Third Party Provider. You understand and
@@ -341,10 +343,10 @@ function Page() {
               charge i.e. 250kms * Extra fare per km.
             </p>
             <p className="text-gray-700 mb-8 text-justify">
-              9.The charges for the Add-on service 'Upgrade to Refundable
-              booking' will not be refunded in any case. E.g. if cab price is
-              Rs. 10000 and price for add-on service 'Upgrade to Refundable
-              booking' is Rs. 500 then in case of cancellation before 6 hours of
+              9.The charges for the Add-on service &apos;Upgrade to Refundable
+              booking&apos; will not be refunded in any case. E.g. if cab price is
+              Rs. 10000 and price for add-on service &apos;Upgrade to Refundable
+              booking&apos; is Rs. 500 then in case of cancellation before 6 hours of
               departure, cab booking price i.e. Rs. 10000 is refundable but Rs.
               500 is not refundable.
             </p>
@@ -381,7 +383,7 @@ function Page() {
               claim or controversy arising out of or relating to these User
               Terms or the breach, termination, enforcement, interpretation or
               validity thereof or the use of the Site, the Service or the
-              Application (collectively, “Disputes”) the parties shall attempt
+              Application (collectively, &apos;Disputes&apos;) the parties shall attempt
               to settle the same amicably, through negotiation and consultation
               at such offices of Rp Royality as Rp Royality may designate. In
               the event the dispute is not resolved internally between after at
@@ -422,9 +424,9 @@ function Page() {
               8. Refund
             </h2>
             <p className="text-gray-700 mb-8 text-justify">
-              If you are eligible for refunds based on the “Cancellation and
-              Returns” policy above, then the refund will be remitted back to
-              you in 5-7 working days. In case of any issues, write to us at
+              If you are eligible for refunds based on the Cancellation and
+              Returns policy above, then the refund will be remitted back to you
+              in 5-7 working days. In case of any issues, write to us at
               rproyality632@gmail.com or call us at 8078783984,8086866993
             </p>
           </div>
