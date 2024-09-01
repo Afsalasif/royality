@@ -5,21 +5,7 @@ import SearchForm from "@/components/SearchForm";
 import { useEffect } from "react";
 // fsq3ajd6Za9IssBhVpCKoZ/IVNUvzA6+cAIpHMe3t4OTlUM
 export default function Home() {
-  useEffect(() => {
-    fetch(
-      "https://api.foursquare.com/v3/places/search?query=kerala+tourist+destination&near=Kerala",
-      {
-        method: "GET",
-        headers: {
-          'Accept': "application/json",
-          'Authorization': "fsq3ajd6Za9IssBhVpCKoZ/IVNUvzA6+cAIpHMe3t4OTlUM",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+
   return (
     <main className="bg-[#013b94]">
       <section className="mx-auto p-6 max-w-7xl">
