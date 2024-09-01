@@ -28,7 +28,7 @@ function Page() {
               are eligible for refunds based on the “Cancellation and Returns”
               policy above, then the refund will be remitted back to you in 5-7
               working days. In case of any issues, write to us at
-              rproyality632@gmail.com or call us at +918086866993
+              rproyality632@gmail.com or call us at +918086866993
             </p>
          
           </div>

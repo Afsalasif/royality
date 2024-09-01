@@ -78,7 +78,7 @@ function Page() {
               <br></br>
               Contacting Us<br></br>
               If there are any questions regarding this privacy policy you may
-              contact us using the information on the Contact Us page.<br></br>
+              contact us using the information on the Contact Us page.<br></br>
             </p>
           </div>
         </div>

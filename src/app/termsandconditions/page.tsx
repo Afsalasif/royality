@@ -81,7 +81,7 @@ function Page() {
               excess of normal “wear and tear” damages and necessary cleaning
               (“Repair or Cleaning”). In the event that a Third Party Provider
               reports the need for Repair or Cleaning, and such Repair or
-              Cleaning request is verified by Rp Royality in Rp Royality’s
+              Cleaning request is verified by Rp Royality in Rp Royality's
               reasonable discretion, Rp Royality reserves the right to
               facilitate payment for the reasonable cost of such Repair or
               Cleaning on behalf of the Third Party Provider. Such amounts will
@@ -232,7 +232,7 @@ function Page() {
               Provider (“Charges”). After you have received services or goods
               obtained through your use of the Service, Rp Royality will
               facilitate your payment of the applicable Charges on behalf of the
-              Third Party Provider as such Third Party Provider’s limited
+              Third Party Provider as such Third Party Provider's limited
               payment collection agent. Payment of the Charges in such manner
               shall be considered the same as payment made directly by you to
               the Third Party Provider. Charges will be inclusive of applicable
@@ -248,7 +248,7 @@ function Page() {
             </p>
             <p className="text-gray-700 mb-8 text-justify">
               2.All Charges are due immediately and payment will be facilitated
-              by Rp Royality , as the Third Party Provider’s limited payment
+              by Rp Royality , as the Third Party Provider's limited payment
               collection agent, after which Rp Royality will send you a receipt
               by email.
             </p>
