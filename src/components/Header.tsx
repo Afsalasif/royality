@@ -9,33 +9,33 @@ import { cn } from "@/lib/utils";
 import { Phone } from "lucide-react";
 const products = [
   {
-    name: "sedan",
-    description: "get a sedan rn",
-    href: "#",
+    name: "hotel",
+    description: "get hotel booking",
+    href: "/hoform",
     icon: ChevronDownIcon,
   },
   {
-    name: "suv",
-    description: "get a suv rn",
-    href: "#",
+    name: "house boat",
+    description: "book a house boat ",
+    href: "/hoform",
     icon: ChevronDownIcon,
   },
   {
-    name: "hatchback",
-    description: "get a hatch rn",
-    href: "#",
+    name: "Tour Packages",
+    description: "get to know our tour package",
+    href: "/hoform",
     icon: ChevronDownIcon,
   },
   {
     name: "tembo travels",
     description: "get a tembo travels rn",
-    href: "#",
+    href: "/hoform",
     icon: ChevronDownIcon,
   },
   {
     name: "bus",
     description: "get a bus rn",
-    href: "#",
+    href: "/hoform",
     icon: ChevronDownIcon,
   },
 ];
