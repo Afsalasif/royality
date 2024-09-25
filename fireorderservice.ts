@@ -9,7 +9,7 @@ interface OrderData {
   receipt: string;
 }
 
-const generateReceiptNumber = async (): Promise<string> => {
+export const generateReceiptNumber = async (): Promise<string> => {
   const receiptDocRef = doc(db, "orders", "receiptCounter");
 
   const receiptDoc = await getDoc(receiptDocRef);

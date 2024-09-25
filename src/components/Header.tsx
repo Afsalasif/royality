@@ -1,6 +1,7 @@
 "use client";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from 'next/image';
 import { useState, Fragment } from "react";
 import React from "react";
 import { Popover, Dialog, Disclosure, Transition } from "@headlessui/react";
@@ -51,11 +52,21 @@ function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="global"
       >
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="flex text-white text-3xl ">RP Royality</span>
-          </Link>
-        </div>
+       <div className="flex lg:flex-1">
+        <Link href="/" className="-m-1.5 p-1.5">
+          <div className="flex items-center">
+            {/* Logo image */}
+            <Image
+              src="/images/logo.png" // path to your locally stored logo in the public folder
+              alt="RP Royality Logo"
+              className="ml-3 text-white text-3xl"
+              width={100} // Set the width of the logo as per your requirement
+              height={100} // Set the height of the logo as per your requirement
+            />
+            {/* <span className="ml-3 text-white text-3xl">RP Royality</span> */}
+          </div>
+        </Link>
+      </div>
         <div className="flex lg:flex-1">
           {" "}
           <div className="flex flex-col items-center">

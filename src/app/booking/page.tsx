@@ -330,6 +330,29 @@ function Page({ searchParams }: Props) {
       }
     });
   }
+  // const [amount, setAmount] = useState('');
+  // const [transactionId, setTransactionId] = useState('');
+
+  // const handlePhonePePayment = async (amount:any,val:any) => {
+  //   try {
+  //     const order = await fetch('/api/create-phonepe-order', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ amount: amount }),
+  //     }).then((res) => res.json());
+
+  //     if (order.redirectUrl) {
+  //       // Redirect user to PhonePe payment page
+  //       window.location.href = order.redirectUrl;
+  //     } else {
+  //       alert('Order creation failed. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during PhonePe payment:', error);
+  //   }
+  // };
 
   const handleRazorpayPayment = async (amount:any,val:any) => {
     try {
@@ -381,6 +404,7 @@ function Page({ searchParams }: Props) {
     if (values.type === '25' || values.type === '100') {
       // Trigger Razorpay payment for 25% or 100% payment
        await handleRazorpayPayment(totalAmount,values);
+      // await handlePhonePePayment(totalAmount,values)
       
 
     } else {
