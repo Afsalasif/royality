@@ -46,7 +46,7 @@ function Page({ searchParams }: Props) {
     if (fmonth > 2 && fmonth < 6) {
       setVehicle1(roundTripData as VehicleData[]);
     } else {
-      setVehicle1(roundTripData2 as VehicleData[]);
+      setVehicle1(roundTripData as VehicleData[]);
     }
   };
 
