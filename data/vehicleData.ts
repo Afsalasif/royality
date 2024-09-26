@@ -7,7 +7,7 @@ export const roundTripData = [
         url:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvN4GyNpVI_6k7AJWfdUtTKMc-q3dYvu3DoezbAHZKkDgu89grVEV1JZDqgA&s',
         vehicleType:"sedan",
         rentPerDay:2500,
-        rentper12:3000,
+        rentper12:3,
         rentPerKm:23,
         rentPerHour:200,
         maximumCapacity:4,
