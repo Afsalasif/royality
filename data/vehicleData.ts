@@ -8,7 +8,7 @@ export const roundTripData = [
         vehicleType:"sedan",
         rentPerDay:2500,
         rentper12:3000,
-        rentPerKm:28,
+        rentPerKm:23,
         rentPerHour:200,
         maximumCapacity:4,
         minumumOneway:1200
@@ -20,7 +20,7 @@ export const roundTripData = [
         vehicleType:"suv",
         rentPerDay:3000,
         rentper12:3500,
-        rentPerKm:40,
+        rentPerKm:25,
         rentPerHour:200,
         maximumCapacity:6,
         minumumOneway:1500
@@ -32,7 +32,7 @@ export const roundTripData = [
         vehicleType:"suv",
         rentPerDay:4000,
         rentper12:4500,
-        rentPerKm:41,
+        rentPerKm:30,
         rentPerHour:250,
         maximumCapacity:"6 or 7",
         minumumOneway:2000
@@ -44,7 +44,7 @@ export const roundTripData = [
         vehicleType:"suv",
         rentPerDay:5000,
         rentper12:5500,
-        rentPerKm:45,
+        rentPerKm:40,
         rentPerHour:250,
         maximumCapacity:7,
         minumumOneway:2500
