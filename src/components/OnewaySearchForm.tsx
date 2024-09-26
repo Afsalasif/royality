@@ -21,6 +21,15 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { format } from "date-fns";
 
+// Spinner component
+const Spinner = () => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+    </div>
+  );
+};
+
 export const formSchema1 = z.object({
   startLocation: z.string().min(1, { message: "Enter an address" }),
   endingLocation: z.string().min(1, { message: "Enter an address" }),
@@ -135,110 +144,113 @@ function OnewaySearchForm() {
   };
 
   return (
-    <Form {...form1}>
-      <form
-        onSubmit={form1.handleSubmit(onSubmit)}
-        className="flex flex-col lg:flex-row lg:max-w-6xl lg:mx-auto items-center justify-center space-x-0 lg:space-x-2 lg:space-y-0 rounded-lg"
-      >
-        <div className="grid w-full lg:max-w-sm items-center gap-1.5">
-          <FormField
-            control={form1.control}
-            name="startLocation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white flex mt-2">
-                  Starting Location
-                </FormLabel>
-                <FormMessage />
-                <FormControl>
-                  <Input {...field} ref={startLocationRef} placeholder="Starting Location" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid w-full lg:max-w-sm items-center gap-1.5">
-          <FormField
-            control={form1.control}
-            name="endingLocation"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white flex mt-2">
-                  Drop Location
-                </FormLabel>
-                <FormMessage />
-                <FormControl>
-                  <Input {...field} ref={endingLocationRef} placeholder="Drop location" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid w-full lg:max-w-sm items-center gap-1.5">
-          <FormField
-            control={form1.control}
-            name="dates"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white flex mt-2">Pickup date</FormLabel>
-                <FormMessage />
-                <FormControl>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "w-[240px] justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date < new Date(new Date().setHours(0, 0, 0, 0))
-                        }
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid w-full lg:max-w-sm items-center gap-1.5">
-          <FormField
-            control={form1.control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white flex mt-2">
-                  Phone number
-                </FormLabel>
-                <FormMessage />
-                <FormControl>
-                  <Input {...field} placeholder="Phone number" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex w-full items-center space-x-2">
-          <div className="grid items-center flex-1">
-            <Button type="submit" className="bg-blue-500 text-base mt-7">
-              {loading ? "Loading..." : "Search"} {/* Conditionally render loading */}
-            </Button>
+    <>
+      {loading && <Spinner />} {/* Render Spinner component when loading */}
+      <Form {...form1}>
+        <form
+          onSubmit={form1.handleSubmit(onSubmit)}
+          className="flex flex-col lg:flex-row lg:max-w-6xl lg:mx-auto items-center justify-center space-x-0 lg:space-x-2 lg:space-y-0 rounded-lg"
+        >
+          <div className="grid w-full lg:max-w-sm items-center gap-1.5">
+            <FormField
+              control={form1.control}
+              name="startLocation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white flex mt-2">
+                    Starting Location
+                  </FormLabel>
+                  <FormMessage />
+                  <FormControl>
+                    <Input {...field} ref={startLocationRef} placeholder="Starting Location" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-        </div>
-      </form>
-    </Form>
+          <div className="grid w-full lg:max-w-sm items-center gap-1.5">
+            <FormField
+              control={form1.control}
+              name="endingLocation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white flex mt-2">
+                    Drop Location
+                  </FormLabel>
+                  <FormMessage />
+                  <FormControl>
+                    <Input {...field} ref={endingLocationRef} placeholder="Drop location" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid w-full lg:max-w-sm items-center gap-1.5">
+            <FormField
+              control={form1.control}
+              name="dates"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white flex mt-2">Pickup date</FormLabel>
+                  <FormMessage />
+                  <FormControl>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-[240px] justify-start text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date(new Date().setHours(0, 0, 0, 0))
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid w-full lg:max-w-sm items-center gap-1.5">
+            <FormField
+              control={form1.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white flex mt-2">
+                    Phone number
+                  </FormLabel>
+                  <FormMessage />
+                  <FormControl>
+                    <Input {...field} placeholder="Phone number" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex w-full items-center space-x-2">
+            <div className="grid items-center flex-1">
+              <Button type="submit" className="bg-blue-500 text-base mt-7">
+                Search
+              </Button>
+            </div>
+          </div>
+        </form>
+      </Form>
+    </>
   );
 }
 
