@@ -116,6 +116,7 @@ function Page({ searchParams }: Props) {
   const [bookingDetails, setBookingDetails] = useState<any>({});
 
   const [price, setPrice] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(bookingDetails.tripTotalFare);
   const [driverPayment, setDriverPayment] = useState<number>();
   const [onlinepayment, setonlinepayment] = useState<number>();
@@ -353,15 +354,63 @@ function Page({ searchParams }: Props) {
   //     console.error('Error during PhonePe payment:', error);
   //   }
   // };
+  // const handleRazorpayPayment = async (amount:any,val:any) => {
+  //   try {
+  //     const order = await fetch('/api/create-order', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ amount: amount }),
+  //     }).then((res) => res.json());
 
-  const handleRazorpayPayment = async (amount:any,val:any) => {
+  //     const options = {
+  //       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
+  //       amount: order.amount,
+  //       currency: 'INR',
+  //       name: 'RP ROYALITY',
+  //       description: 'Booking Payment',
+  //       order_id: order.id,
+  //       handler: async (response: PaymentDetails) => {
+  //         const verificationResult = await verifyPayment(response);  // Verify payment
+          
+  //         if (verificationResult.success) {
+  //           console.log("Payment verified successfully!");
+  //           await saveBookingToFirebase(val);
+
+  //         } else {
+  //           console.error("Payment verification failed.");
+          
+  //         }
+  //       },
+  //       prefill: {
+  //         name: form1.getValues('name'),
+  //         email: form1.getValues('email'),
+  //         contact: form1.getValues('mobile'),
+  //       },
+  //       theme: {
+  //         color: '#3399cc',
+  //       },
+  //     };
+
+  //     const rzp = new window.Razorpay(options);
+  //     rzp.open();
+  //   } catch (error) {
+  //     console.error('Error during Razorpay payment:', error);
+  //   }
+  // }
+
+
+  const handleRazorpayPayment = async (amount:any, val:any) => {
     try {
+      setLoading(true); // Set loading to true while creating the order
+
       const order = await fetch('/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ amount: amount }),
+        body: JSON.stringify({ amount }),
       }).then((res) => res.json());
 
       const options = {
@@ -371,17 +420,16 @@ function Page({ searchParams }: Props) {
         name: 'RP ROYALITY',
         description: 'Booking Payment',
         order_id: order.id,
-        handler: async (response: PaymentDetails) => {
-          const verificationResult = await verifyPayment(response);  // Verify payment
-          
+        handler: async (response:any) => {
+          const verificationResult = await verifyPayment(response); // Verify payment
+
           if (verificationResult.success) {
             console.log("Payment verified successfully!");
             await saveBookingToFirebase(val);
-
           } else {
             console.error("Payment verification failed.");
-          
           }
+          setLoading(false); // Set loading to false after payment verification
         },
         prefill: {
           name: form1.getValues('name'),
@@ -395,9 +443,18 @@ function Page({ searchParams }: Props) {
 
       const rzp = new window.Razorpay(options);
       rzp.open();
+      setLoading(false); // Set loading to false after Razorpay window opens
     } catch (error) {
       console.error('Error during Razorpay payment:', error);
+      setLoading(false); // Ensure loading is set to false in case of error
     }
+  };
+  const Spinner = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+      </div>
+    );
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema1>) => {
@@ -454,6 +511,7 @@ function Page({ searchParams }: Props) {
 
   return (
     <>
+     {loading && <Spinner />} {/* Render Spinner component when loading */}
       <div className="p-4 max-w-6xl lg:flex lg:justify-between  mx-auto">
         <div className="bg-white shadow-md rounded p-6 mb-4">
           <h2 className="text-xl font-semibold mb-4">
