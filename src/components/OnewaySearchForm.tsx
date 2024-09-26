@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
@@ -35,6 +35,7 @@ type FormSchema = z.infer<typeof formSchema1>;
 
 function OnewaySearchForm() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false); // Add loading state
   const form1 = useForm<FormSchema>({
     resolver: zodResolver(formSchema1),
     defaultValues: {
@@ -56,7 +57,6 @@ function OnewaySearchForm() {
       const endAutocomplete = new google.maps.places.Autocomplete(
         endingLocationRef.current!
       );
-
       startAutocomplete.addListener("place_changed", () => {
         const place = startAutocomplete.getPlace();
         form1.setValue("startLocation", place.formatted_address || "");
@@ -94,6 +94,7 @@ function OnewaySearchForm() {
 
   const onSubmit: SubmitHandler<FormSchema> = async (values) => {
     console.log(values);
+    setLoading(true); // Set loading to true when submission starts
 
     try {
       const { distance, duration } = await calculateDistance(
@@ -128,6 +129,8 @@ function OnewaySearchForm() {
       router.push(`/searchOneway?url=${encodeURIComponent(url.href)}`);
     } catch (e) {
       console.error("Error:", e);
+    } finally {
+      setLoading(false); // Set loading to false after submission is done
     }
   };
 
@@ -230,7 +233,7 @@ function OnewaySearchForm() {
         <div className="flex w-full items-center space-x-2">
           <div className="grid items-center flex-1">
             <Button type="submit" className="bg-blue-500 text-base mt-7">
-              Search
+              {loading ? "Loading..." : "Search"} {/* Conditionally render loading */}
             </Button>
           </div>
         </div>
